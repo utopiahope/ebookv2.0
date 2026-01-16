@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ebook + Chatbot</title>
+  <link rel="preconnect" href="https://www.chatbase.co">
+
+  <style>
+    iframe[src*="heyzine.com"]{
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+
+    :root{
+      --cb-w: 300px;
+      --cb-h: 500px;
+      --cb-scale: 0.85; /* UI nhỏ hơn nhưng vẫn fill khung */
+    }
+
+    /* Ép kích thước khung chat */
+    #chatbase-bubble-window{
+      width: var(--cb-w) !important;
+      height: var(--cb-h) !important;
+      max-height: var(--cb-h) !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+
+    /* Phóng to iframe theo 1/scale rồi scale xuống => lấp đầy khung */
+    #chatbase-bubble-window iframe[title="Chatbot"],
+    #chatbase-bubble-window iframe[src*="chatbot-iframe"]{
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width:  calc(100% / var(--cb-scale)) !important;
+      height: calc(100% / var(--cb-scale)) !important;
+      transform: scale(var(--cb-scale)) !important;
+      transform-origin: 0 0 !important;
+      border: 0 !important;
+      display: block !important;
+    }
+  </style>
+</head>
+<body>
+  <iframe
+    src="https://heyzine.com/flip-book/c4f4a191d6.html"; 
+    allowfullscreen
+    allow="clipboard-write"
+    scrolling="no">
+  </iframe>
+  <script>
+    (function(){
+      if(!window.chatbase || window.chatbase("getState") !== "initialized"){
+        window.chatbase = (...arguments) => {
+          if(!window.chatbase.q){ window.chatbase.q = [] }
+          window.chatbase.q.push(arguments)
+        };
+        window.chatbase = new Proxy(window.chatbase, {
+          get(target, prop){
+            if(prop === "q"){ return target.q }
+            return (...args) => target(prop, ...args)
+          }
+        });
+      }
+      const onLoad = function(){
+        const s = document.createElement("script");
+        s.src = "https://www.chatbase.co/embed.min.js";
+        s.id = "0t_jpi8IIi656E6zTKfkq";
+        s.domain = "www.chatbase.co";
+        document.body.appendChild(s);
+      };
+      if(document.readyState === "complete") onLoad();
+      else window.addEventListener("load", onLoad);
+    })();
+  </script>
+</body>
+</html>
+
